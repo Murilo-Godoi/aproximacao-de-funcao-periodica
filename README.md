@@ -1,0 +1,5 @@
+Esse programa foi criado para um trabalho na disciplina de cálculo numérico da minha faculdade e tem como base o método dos mínmos quadrados para aproximação de funções trigonométricas. Nesse trabalho, foram fornecidos os dados das temperaturas mínimas registradas na mesma localidade em 120 meses. A partir desses dados, pede-se uma função que aproxime a temperatura mínima para os meses 1 a 120 e que forneça uma aproximação razoável para o mês 132.
+
+No primeiro momento, o código havia sido feito especificamente para o exercício proposto no arquivo "SME0300-trabalho02" com os dados do arquivo "dados_temperatura_minima" No entanto, após entregar o trabalho resolvi generalizar para qualquer conjunto de dados que apresente periodicidade.
+
+Ao rodar o código, é necessário fornecer um arquivo CSV contendo os dados que servirão de base para a aproximação e a ordem de aproximação desejada (quanto maior a ordem, maior a precisão). O programa então cria dois arquivos de saida, um contendo a função de aproximação F(x) e outro contendo os valores de F(x) aproximados para todos os valores de x fornecidos.
