@@ -26,7 +26,7 @@ def data(arquivo):
 def transforma_em_pi(list):
     x = []
     for i in range(len(list)):
-        x.append(2 * int(list[i][0]) * math.pi / tamanho_amostra)
+        x.append(2 * int(list[i][0]) * math.pi / N)
     return x
 
 
@@ -81,12 +81,8 @@ def F(x):
 #cabe ressaltar que essa conversão poderia ser feita dentro na função de aproximação F(x), mas optei por essa forma para facilitar o entendimento da função de aproximação
 def mais_valores_x(stop):
     for i in range(len(x)+1,stop+1):
-        x.append(2 * i * math.pi / tamanho_amostra)
+        x.append(2 * i * math.pi / N)
     return x
-
-#converte um valor específico de x proporcionalmente ao intervalo [0,2π]
-def valor_especifico_x(valor):
-    return valor*2*math.pi/tamanho_amostra
 
 #retorna uma string com a função de aproximação encontrada
 def escreve_funcao():
@@ -104,40 +100,38 @@ def escreve_funcao():
     return funcao
 
 #escreve 2 arquivos de saida para a ordem de aproximação escolhida, um contendo as aproximações até o valor de 132 e outro contendo um resumo dos resultados obtidos
-def arquivo_saida():
+def escrever_saida():
     dados_aproximados = []
     for i in range(len(x)):
         par_ordenado = []
         par_ordenado.append(i+1)
         par_ordenado.append(F(x[i]))
         dados_aproximados.append(par_ordenado)
-    arquivo_saida = open('aproximações-%i.csv' % (ordem), 'w', newline='')
+    arquivo_saida = open('saidas/aproximações-%i.csv' % (ordem), 'w', newline='')
     writer = csv.writer(arquivo_saida, delimiter=',')
     for i in range(len(dados_aproximados)):
         writer.writerow(dados_aproximados[i])
-    saida = open("resultados-%i.txt" % (ordem), "w")
+    saida = open("saidas/resultados-%i.txt" % (ordem), "w")
     saida.write('Resultados para uma aproximação de ordem %i com o método dos mínimos quadrados trigonométrico - caso discreto\n\ncoeficientes a: \n %s \n\ncoeficientes b:\n%s\n\nFunção de aproximação\n%s' % (ordem, a, b, funcao))
 
 
-dados = data('dados_temperatura_minima.csv')
-tamanho_amostra = len(dados)
+
+dados = data('enunciado/dados_temperatura_minima.csv')
+N = len(dados)
 x = transforma_em_pi(dados)
 y = vetor_y(dados)
-N = len(dados)
 ordem = int(input('ordem de aproximação:'))
 
-while ordem >= (tamanho_amostra/2):
+while ordem >= (N/2):
     print('A ordem de aproximação deve ser menor que metade do tamanho da amostra, escolha outro valor')
     ordem = int(input('ordem de aproximação:'))
 
 a,b = MMQ_trig_discreto(y,N)
 funcao = escreve_funcao()
 
-mais_valores_x(132)
-print(len(x))
-arquivo_saida()
+mais_valores_x(int(input('deseja aproximar até qual valor:')))
+escrever_saida()
 print(funcao)
-print("A aproximação para o valor de 132 é %.6f"%(F(valor_especifico_x(132))))
 
 
 
